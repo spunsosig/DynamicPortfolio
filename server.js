@@ -1,11 +1,22 @@
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT || 3000;
+const port = 3000;
 
+// Set view engine to EJS
+app.set('view engine', 'ejs');
+app.set('views', __dirname + '/views');
+
+// Serve static files (CSS, JS)
+app.use(express.static('public'));
+
+// Route to render your portfolio
 app.get('/', (req, res) => {
-    res.send('Hello, World!');
+  res.render('index', {
+    title: 'My Portfolio',
+    name: 'IKRAM'
+  });
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
 });
