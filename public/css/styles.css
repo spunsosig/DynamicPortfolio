@@ -4,13 +4,17 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  background-image: url('../images/untitled.png');
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to bottom, #222222 0%, #222222 60%, #313E50 100%);
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
-  color: white;
+  color: #DCEDFF;
   min-height: 100vh;
 }
 
@@ -50,17 +54,19 @@ nav ul li a {
 
 .main-name-heading {
   font-size: 10rem;
+  color: white;
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
 
 .main-subtitle {
-  font-size: 1.5rem;
+  font-size: 3rem;
   color: #DCEDFF;
 }
 
+/* WORK SECTION TO FOLLOW BELOW */
 .work-section {
   min-height: 100vh;
   padding: 5rem 2rem;
-  background-color: rgba(49, 62, 80, 0.9);
+  background-color: #313E50;
 }
