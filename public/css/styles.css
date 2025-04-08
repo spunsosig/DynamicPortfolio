@@ -4,13 +4,17 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  font-family: 'Segoe UI', sans-serif;
+  font-family: Inter, sans-serif;
   background: linear-gradient(to bottom, #222222 0%, #222222 60%, #313E50 100%);
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
-  color: white;
+  color: #DCEDFF;
   min-height: 100vh;
 }
 
@@ -35,7 +39,6 @@ nav ul li a {
   font-size: 1.5rem;
 }
 
-/* MAIN HERO SECTION */
 .main-page-section {
   height: calc(100vh - 80px);  
   display: flex;
@@ -48,18 +51,26 @@ nav ul li a {
 
 .main-name-heading {
   font-size: 10rem;
+  color: white;
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
 
 .main-subtitle {
-  font-size: 1.5rem;
+  font-size: 3rem;
   color: #DCEDFF;
 }
 
-/* WORK SECTION TO FOLLOW BELOW */
-.work-section {
-  min-height: 100vh;
-  padding: 5rem 2rem;
-  background-color: #313E50;
+.page-section {
+  height: 100vh;
+  padding-top: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  
+}
+
+.section-heading{
+  font-size: 5rem;
 }
