@@ -1,35 +1,66 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from "react";
+import Header from "./Header";
 
 function App() {
-  const [count, setCount] = useState(0)
 
-  return (
+  const validateForm = (e) =>{
+    e.preventDefault();
+    console.log("Validating form...");
+    return true;
+  }
+
+  return(
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+      <Header/>
+
+      <section id="home" className="page-section main-page-section">
+        <div className="main">
+          <h1 className="main-name-heading">TEST</h1>
+          <p className="main-subtitle">Software Engineer, Full stack developer</p>
+        </div>
+      </section>
+
+      <section id="expertise" className="page-section">
+        <h2 className="section-heading">Expertise</h2>
         <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
+          Lorem ipsum dolor sit amet...
         </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      </section>
+
+      <section id="work" className="page-section">
+        <h2 className="section-heading">Work</h2>
+        <p>
+          Lorem ipsum dolor sit amet...
+        </p>
+      </section>
+
+      <section id="projects" className="page-section">
+        <h2 className="section-heading">Projects</h2>
+        <p>
+          Lorem ipsum dolor sit amet...
+        </p>
+      </section>
+
+      <section id="contact" className="page-section">
+        <h2 className="section-heading">Contact</h2>
+        <form action="/contact" method="POST" onSubmit={validateForm}>
+          <div>
+            <label htmlFor="name">Name:</label>
+            <input type="text" id="name" name="name" required />
+          </div>
+          <div>
+            <label htmlFor="email">Email:</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+          <div>
+            <label htmlFor="messageInput">Message:</label>
+            <textarea id="messageInput" name="message" required></textarea>
+          </div>
+          <button type="submit">Send Message</button>
+        </form>
+      </section>
     </>
-  )
-}
+  );
+};
 
 export default App

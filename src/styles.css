@@ -1,66 +1,71 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: Arial, sans-serif;
-    background-image: url('../images/untitled.png');
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    color: white;
-    min-height: 100vh;
-  }
-  
-  nav {
-    padding: 3rem;
-    height: 80px;
-    background: rgba(0, 0, 0, 0.5);
-    position: relative;
-    z-index: 10;
-  }
-  
-  nav ul {
-    display: flex;
-    justify-content: center;
-    list-style: none;
-  }
-  
-  nav ul li {
-    margin: 0 30px;
-  }
-  
-  nav ul li a {
-    color: #DCEDFF;
-    text-decoration: none;
-    font-size: 1.5rem;
-  }
-  
-  .main-page-section {
-    height: calc(100vh - 80px);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 0 2rem;
-  }
-  
-  .main-name-heading {
-    font-size: 10rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-  }
-  
-  .main-subtitle {
-    font-size: 1.5rem;
-    color: #DCEDFF;
-  }
-  
-  .work-section {
-    min-height: 100vh;
-    padding: 5rem 2rem;
-    background-color: rgba(49, 62, 80, 0.9);
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html{
+  scroll-behavior: smooth;
+}
+
+body {
+  margin-inline: 100px;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to bottom, #222222 0%, #222222 60%, #313E50 100%);
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Optional: keeps it in place while scrolling */
+  background-size: cover;
+  color: white;
+  min-height: 100vh;
+}
+
+nav {
+  padding: 3rem;
+}
+
+nav ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+}
+
+nav ul li {
+  margin: 0 30px;
+}
+
+nav ul li a {
+  color: #DCEDFF;
+  text-decoration: none;
+  font-size: 1.5rem;
+}
+
+.page-section {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* center vertically */
+  align-items: center;     /* center horizontally */
+  text-align: center;
+}
+
+.section-heading{
+  font-size: 5rem;
+
+}
+
+.main-page-section {
+  height: calc(100vh - 80px); /* take full viewport height */
+  padding: 0 2rem; /* optional horizontal padding */
+}
+
+.main-name-heading {
+  font-size: 10rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem; /* Add some space below the name */
+}
+
+.main-subtitle {
+  font-size: 4rem;
+  color: #DCEDFF;
+}
+
