@@ -4,7 +4,7 @@ import Expertise from "./components/Expertise";
 import Hero from "./components/Hero";
 import Contact from "./components/Contact";
 import Projects from "./components/Projects";
-import Work from "./components/Work"
+import Work from "./components/Work";
 
 
 function App() {
@@ -12,9 +12,9 @@ function App() {
   return(
     <>
       <Header/>
+      <Hero></Hero>
 
       <div className="sections">
-        <Hero></Hero>
         <Expertise></Expertise>
         <Work></Work>
         <Projects></Projects>
@@ -24,4 +24,4 @@ function App() {
   );
 };
 
-export default App
+export default App;

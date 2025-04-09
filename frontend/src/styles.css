@@ -12,13 +12,13 @@ body {
   /* margin-inline: 100px; */
   background-image: url('assets/background.png');
   font-family: 'Segoe UI', sans-serif;
-  /* background: linear-gradient(to bottom, #222222 0%, #222222 60%, #313E50 100%); */
-  background-repeat: no-repeat;
-  background-attachment: fixed; /* Optional: keeps it in place while scrolling */
-  background-size: cover;
+  /* background-repeat: no-repeat; */
+  background-attachment: scroll;
+  /* background-size: cover; */
   color: white;
   min-height: 100vh;
 }
+
 
 nav {
   padding: 3rem;
@@ -71,3 +71,6 @@ nav ul li a {
   color: #DCEDFF;
 }
 
+.sections{
+    background: linear-gradient(to bottom, #222222 0%, #222222 1%, #313E50 10%);
+}
