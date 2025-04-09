@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title><%= title %></title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <title>TEST</title>
+    <link rel="stylesheet" href="/src/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">   
@@ -21,7 +21,7 @@
 
   <section id="home" class="main-page-section">
     <div class="main">
-        <h1 class="main-name-heading"><%= name %></h1>
+        <h1 class="main-name-heading">TEST</h1>
         <p class="main-subtitle">Software Engineer, Full stack developer</p>    </div>
   </section>
 
@@ -48,9 +48,33 @@
 
   <section id="contact" class="page-section">
     <h2 class="section-heading">Contact</h2>
-    <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vehicula consectetur facilisis. In sed ornare nisl. Etiam eu odio id mauris finibus efficitur. Curabitur elementum, eros vitae viverra luctus, metus dui porttitor orci, in blandit libero leo non quam. Curabitur faucibus rutrum quam sit amet efficitur. Aliquam bibendum luctus dolor, eget vehicula ante efficitur nec. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Phasellus ut elit interdum, maximus augue id, finibus nisi. Aliquam ornare eu sem vitae posuere. Donec porta dictum libero, a tincidunt nulla porta non. Fusce eu eros at erat finibus mollis et eu velit. Nullam et molestie libero. In augue ligula, ultricies ac eros quis, iaculis vulputate eros. In a venenatis ipsum, ac bibendum velit. Cras venenatis metus ut nisl egestas sagittis. Donec non pellentesque eros. 
-    </p>
+        <form action="/contact" method="POST" onsubmit="return validateForm();">
+          <div>
+              <label for="name">Name:</label>
+              <input type="text" id="name" name="name" required>
+          </div>
+          <div>
+              <label for="email">Email:</label>
+              <input type="email" id="email" name="email" required>
+          </div>
+          <div>
+              <label for="messageInput">Message:</label>
+              <textarea id="messageInput" name="message" required></textarea>
+          </div>
+          <button type="submit">Send Message</button>
+      </form>
+    </div>
+
+    <script>
+      function validateForm() {
+          // Optional: Add JavaScript to validate the form before submission
+          return true; // Allow form submission
+      }
+    </script>
   </section>
+
+
+
+  
 </body>
 </html>
