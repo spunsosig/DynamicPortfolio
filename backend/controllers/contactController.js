@@ -1,6 +1,8 @@
-const nodemailer = require('nodemailer');
+const path = require('path');
+const dotenv = require('dotenv');
+dotenv.config({ path: path.resolve(__dirname, '../contactform.env') });
 
-require('dotenv').config();
+const nodemailer = require('nodemailer');
 
 exports.handleContactSubmission = (req, res) => {
     const { name, email, message } = req.body;
@@ -21,7 +23,7 @@ exports.handleContactSubmission = (req, res) => {
 
     const mailOptions = {
         from: email, 
-        to: 'your-email@gmail.com',
+        to: process.env.EMAIL_USER,
         subject: `New Contact Form Submission from ${name}`,
         text: `You have received a new message from the contact form:\n\nName: ${name}\nEmail: ${email}\nMessage: ${message}`,
     };
