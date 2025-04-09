@@ -21,6 +21,11 @@ app.get('/api', (req, res) => {
 const contactRoutes = require('./routes/contact');
 app.use('/contact', contactRoutes);
 
+// Serve the front-end app for all other GET requests
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
+// });
+
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
