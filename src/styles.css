@@ -9,9 +9,10 @@ html{
 }
 
 body {
-  margin-inline: 100px;
+  /* margin-inline: 100px; */
+  background-image: url('assets/background.png');
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to bottom, #222222 0%, #222222 60%, #313E50 100%);
+  /* background: linear-gradient(to bottom, #222222 0%, #222222 60%, #313E50 100%); */
   background-repeat: no-repeat;
   background-attachment: fixed; /* Optional: keeps it in place while scrolling */
   background-size: cover;
@@ -54,6 +55,7 @@ nav ul li a {
 }
 
 .main-page-section {
+  background-size: cover;
   height: calc(100vh - 80px); /* take full viewport height */
   padding: 0 2rem; /* optional horizontal padding */
 }

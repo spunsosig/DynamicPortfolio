@@ -1,5 +1,10 @@
 import React from "react";
-import Header from "./Header";
+import Header from "./components/Header";
+import Expertise from "./components/Expertise";
+import Hero from "./components/Hero";
+import Hero from "./components/Hero";
+import Hero from "./components/Hero";
+
 
 function App() {
 
@@ -12,6 +17,10 @@ function App() {
   return(
     <>
       <Header/>
+
+      <div class="sections">
+
+      </div>
 
       <section id="home" className="page-section main-page-section">
         <div className="main">
