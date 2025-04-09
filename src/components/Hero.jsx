@@ -7,4 +7,4 @@ const Hero = () => (
       </section>
 );
 
-export default Header;
+export default Hero;

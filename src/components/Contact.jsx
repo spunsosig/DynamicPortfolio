@@ -1,4 +1,10 @@
 const Contact = () => {
+    const validateForm = (e) =>{
+        e.preventDefault();
+        console.log("Validating form...");
+        return true;
+    }
+
     <section id="contact" className="page-section">
         <h2 className="section-heading">Contact</h2>
         <form action="/contact" method="POST" onSubmit={validateForm}>
@@ -18,3 +24,5 @@ const Contact = () => {
         </form>
     </section>
 };
+
+export default Contact;
