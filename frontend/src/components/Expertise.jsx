@@ -1,9 +1,13 @@
+import Card from './Card';
+
 const Expertise = () => (
     <section id="expertise" className="page-section">
         <h2 className="section-heading">Expertise</h2>
-        <p>
-          Lorem ipsum dolor sit amet...
-        </p>
+        <div className='flex flex-row justify-center items-start gap-6'>
+          <Card></Card>
+          <Card></Card>
+          <Card></Card>
+        </div>
     </section>
 );
 
