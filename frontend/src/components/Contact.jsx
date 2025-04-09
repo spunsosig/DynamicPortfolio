@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const Contact = () => {
-  // Define state variables for form inputs
+  // State variables to hold form data
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
@@ -17,17 +17,17 @@ const Contact = () => {
     e.preventDefault();
     console.log("Validating form...");
 
-    // Here, you can add your validation logic (e.g., check if fields are empty)
+    // Validation logic
     if (!name || !email || !message) {
       alert('All fields are required!');
       return false;
     }
 
-    return true; // Return true if validation passes
+    return true;
   };
 
   const handleSubmit = async (e) => {
-    if (!validateForm(e)) return; // Prevent sending if validation fails
+    if (!validateForm(e)) return; 
 
     try {
       const response = await fetch('http://localhost:3001/contact', {
@@ -35,16 +35,17 @@ const Contact = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, email, message }), // Convert form data to JSON
+        body: JSON.stringify({ name, email, message }), // data to JSON
       });
 
       if (!response.ok) {
         throw new Error('Network response was not ok.');
       }
 
-      const data = await response.json(); // Parse JSON response
+      // Handle the response from the server
+      const data = await response.json();
       console.log('Success:', data);
-      // Optionally, clear the form after successful submission
+      // Clear the form after successful submission
       setName('');
       setEmail('');
       setMessage('');
