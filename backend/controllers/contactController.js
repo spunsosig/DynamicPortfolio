@@ -1,6 +1,6 @@
 const path = require('path');
 const dotenv = require('dotenv');
-dotenv.config({ path: path.resolve(__dirname, '../contactform.env') });
+dotenv.config({ path: path.resolve(__dirname, '../contactForm.env') });
 
 const nodemailer = require('nodemailer');
 
