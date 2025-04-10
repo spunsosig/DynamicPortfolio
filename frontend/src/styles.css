@@ -12,7 +12,7 @@ html{
 
 body {
   background-image: url('assets/background.png');
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Inter', sans-serif;
   background-attachment: scroll;
   color: white;
   min-height: 100vh;
@@ -40,31 +40,36 @@ nav ul li a {
 }
 
 .page-section {
-  /* height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center; */
-  text-align: center;
+  min-height: 100vh;
+  padding-top: 100px;
 }
 
 .section-heading{
   font-size: 5rem;
+  margin-bottom: 50px;
+  text-align: center;
 
 }
 
 .main-page-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
   background-size: cover;
   height: calc(100vh - 80px);
   padding: 0 2rem;
 }
 
 .main-name-heading {
+  text-align: center;
   font-size: 10rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
 
 .main-subtitle {
+  text-align: center;
   font-size: 4rem;
   color: #DCEDFF;
 }

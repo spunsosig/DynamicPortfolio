@@ -11,9 +11,10 @@ function App() {
 
   return(
     <>
+    <div className="flex flex-col justify-center">
       <Header/>
       <Hero></Hero>
-
+    </div>
       <div className="sections">
         <Expertise></Expertise>
         <Work></Work>
