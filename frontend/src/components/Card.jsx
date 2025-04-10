@@ -2,7 +2,7 @@ import { Code } from "lucide-react"
 
 const Card = (props) => {
     return(
-        <div className="max-w-sm p-8 border-4 border-white rounded-xl bg-white/5 text-white shadow-md min-h-100">
+        <div className="max-w-sm p-8 rounded-xl text-white shadow-md min-h-100 border-4 border-white bg-sky-500/100 myCard ">
             
             {/* Icon */}
             <div className="mb-4 flex flex-row">

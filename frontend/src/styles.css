@@ -1,8 +1,6 @@
 @import "tailwindcss";
 
 * {
-  /* margin: 0;
-  padding: 0; */
   box-sizing: border-box;
 }
 
@@ -16,21 +14,6 @@ body {
   background-attachment: scroll;
   color: white;
   min-height: 100vh;
-}
-
-
-nav {
-  padding: 3rem;
-}
-
-nav ul {
-  display: flex;
-  justify-content: center;
-  list-style: none;
-}
-
-nav ul li {
-  margin: 0 30px;
 }
 
 nav ul li a {
@@ -76,4 +59,11 @@ nav ul li a {
 
 .sections{
     background: linear-gradient(to bottom, #222222 0%, #222222 1%, #313E50 10%);
+}
+
+.myCard{
+  border-radius: 50px;
+background: #1a2028;
+box-shadow:  20px 20px 13px #181e26,
+             -20px -20px 13px #1c222a;
 }
