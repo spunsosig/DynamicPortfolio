@@ -47,7 +47,7 @@ const Contact = () => {
   };
 
   return (
-    <section className="flex items-center justify-center min-h-screen px-4 py-12 bg-gradient-to-b from-black via-[#0f0f38] to-[#0b2c3b] text-white">
+    <section id="contacts" className="flex items-center justify-center min-h-screen px-4 py-12 text-white">
       <div className="max-w-3xl w-full text-center">
         <h1 className="text-4xl md:text-5xl font-extrabold mb-4">Feel free to reach out</h1>
 
