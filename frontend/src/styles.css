@@ -4,6 +4,18 @@
   box-sizing: border-box;
 }
 
+.icon-style {
+  color: white;
+  width: 1.5rem;
+  height: 1.5rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.icon-style:hover {
+  color: #d1d5db; /* Tailwind's gray-300 */
+}
+
 html, body{
   margin: 0;
   padding: 0; 
@@ -63,7 +75,7 @@ nav ul li a {
 
 .myCard{
   border-radius: 50px;
-  background: #1a2028;
-  box-shadow:  20px 20px 13px #181e26,
-             -20px -20px 13px #1c222a;
+background: #210455;
+box-shadow:  22px 22px 44px #140233,
+             -22px -22px 44px #2e0677;
 }
