@@ -1,5 +1,5 @@
 const Hero = () => (
-    <section id="home" className="page-section main-page-section">
+    <section id="home" className="page-section title-section">
 
           <h1 className="main-name-heading">TEST</h1>
           <p className="main-subtitle">Software Engineer, Full stack developer</p>

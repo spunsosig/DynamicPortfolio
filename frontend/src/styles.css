@@ -4,16 +4,11 @@
   box-sizing: border-box;
 }
 
-html{
+html, body{
+  margin: 0;
+  padding: 0; 
   scroll-behavior: smooth;
-}
-
-body {
-  background-image: url('assets/background.png');
-  font-family: 'Inter', sans-serif;
-  background-attachment: scroll;
-  color: white;
-  min-height: 100vh;
+  height: 100%;
 }
 
 nav ul li a {
@@ -22,26 +17,30 @@ nav ul li a {
   font-size: 1.5rem;
 }
 
+.title-section {
+  background-image: url('assets/background.png'); 
+  background-size: cover;          
+  background-position: center;     
+  background-repeat: no-repeat;   
+  min-height: 100vh;             
+  display: flex;                 
+  flex-direction: column;       
+  justify-content: center;      
+  align-items: center;          
+  text-align: center;           
+  color: white;           
+}
+
 .page-section {
   min-height: 100vh;
   padding-top: 100px;
+  color: #DCEDFF;
 }
 
 .section-heading{
   font-size: 5rem;
   margin-bottom: 50px;
   text-align: center;
-
-}
-
-.main-page-section {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  background-size: cover;
-  height: calc(100vh - 80px);
-  padding: 0 2rem;
 }
 
 .main-name-heading {
@@ -58,12 +57,13 @@ nav ul li a {
 }
 
 .sections{
-    background: linear-gradient(to bottom, #222222 0%, #222222 1%, #313E50 10%);
+  background: #ffffff;
+  background: linear-gradient(to bottom,rgba(0, 0, 0, 1) 0%, rgba(15, 15, 56, 1) 40%, rgba(11, 44, 59, 1) 100%);
 }
 
 .myCard{
   border-radius: 50px;
-background: #1a2028;
-box-shadow:  20px 20px 13px #181e26,
+  background: #1a2028;
+  box-shadow:  20px 20px 13px #181e26,
              -20px -20px 13px #1c222a;
 }
