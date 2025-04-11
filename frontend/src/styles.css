@@ -129,3 +129,24 @@ html, body{
 .contact-button:hover {
   background-color: #7c3aed;
 }
+
+.work-headings {
+  width: min-content;
+  white-space: nowrap;
+  font-size: 2rem;
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 100;
+  font-style: thin;
+}
+
+.work-dropdown {
+  --tw-bg-opacity: 1;
+  padding-inline: 15px;
+  border-radius: 4px;
+  background-color: rgba(127, 29, 29, var(--tw-bg-opacity));
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
