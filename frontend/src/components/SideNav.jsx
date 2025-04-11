@@ -3,8 +3,8 @@ import {Home, Glasses, Briefcase, FolderDot, Mail} from "lucide-react"
 const SideNav = ({ visible }) => {
     return(
         <nav
-            className={`fixed top-100 left-0 w-20 bg-red-900 flex flex-col items-center justify-center 
-            space-y-6 transition duration-300 ease-in-out transform 
+            className={`fixed top-100 left-3 w-20 bg-red-900 flex flex-col items-center justify-center 
+            space-y-10 transition duration-300 ease-in-out transform 
             ${visible ? "opacity-75 transition duration 300 hover:opacity-100 translate-x-0" : "opacity-0 -translate-x-5"}`}>
 
             <a href="#home"><Home className="icon-style mt-5"></Home></a>
