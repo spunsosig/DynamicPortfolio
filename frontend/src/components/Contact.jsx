@@ -56,21 +56,24 @@ const Contact = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <section id='contact' className='page-section h-full'>
+      <h2 className="section-heading">Contact</h2>
+      <form onSubmit={handleSubmit}>
       <div>
         <label>Name:</label>
-        <input type="text" name="name" value={name} onChange={handleChange} required />
+        <input className='border-1 border-white' type="text" name="name" value={name} onChange={handleChange} required />
       </div>
       <div>
         <label>Email:</label>
-        <input type="email" name="email" value={email} onChange={handleChange} required />
+        <input className='border-1 border-white' type="email" name="email" value={email} onChange={handleChange} required />
       </div>
       <div>
         <label>Message:</label>
-        <textarea name="message" value={message} onChange={handleChange} required />
+        <textarea className='border-1 border-white'  name="message" value={message} onChange={handleChange} required />
       </div>
-      <button type="submit">Submit</button>
+      <button  className='border-1 border-white bg-grey'  type="submit">Submit</button>
     </form>
+    </section>
   );
 };
 
