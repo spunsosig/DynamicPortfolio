@@ -48,12 +48,12 @@ html, body{
   justify-content: center;      
   align-items: center;          
   text-align: center;           
-  color: white;        
+  color: white;           
 }
 
 
 .page-section {
-  min-height: 100vh;
+  /* min-height: 100vh; */
   padding-top: 100px;
   color: #DCEDFF;
 }
@@ -133,16 +133,15 @@ html, body{
 .work-headings {
   width: min-content;
   white-space: nowrap;
-  font-size: 2rem;
-  font-family: "Montserrat", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 100;
-  font-style: thin;
+  font-size: 1rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .work-dropdown {
   --tw-bg-opacity: 1;
-  padding-inline: 15px;
+  padding: 10px 15px;
   border-radius: 4px;
   background-color: rgba(127, 29, 29, var(--tw-bg-opacity));
   display: flex;
