@@ -33,6 +33,16 @@ const Work = () => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
+  // ^ABOVE IS THE SAME THING AS:
+  //
+  // const toggleSection = (index) => {
+  //   if (openIndex === index) {
+  //     setOpenIndex(null); // If it's already open, close it
+  //   } else {
+  //     setOpenIndex(index); // If it's not open, open it
+  //   }
+  // };
+
   return (
     <section id="work" className="page-section">
       <h2 className="font-extrabold section-heading">Work</h2>
@@ -49,9 +59,8 @@ const Work = () => {
                   <span className="work-headings">{job.years}</span>
                   <ChevronDown
                     size={30}
-                    className={`transition-transform duration-300 ${
-                      openIndex === index ? "rotate-180" : ""
-                    }`}
+                    className={`transition-transform duration-300 
+                      ${openIndex === index ? "rotate-180" : ""}`}
                   />
                 </span>
               </div>
