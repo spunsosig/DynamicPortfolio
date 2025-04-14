@@ -1,4 +1,26 @@
 import React, { useState } from "react";
+import { toast } from "react-hot-toast";
+import { z } from "zod";
+import axios from "axios";
+
+// Validation schemas
+const contactSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Invalid email address"),
+  message: z.string().min(10, "Message must be at least 10 characters"),
+});
+
+const scheduleSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Invalid email address"),
+  date: z.string().refine((date) => {
+    const selected = new Date(date);
+    const today = new Date();
+    return selected >= today;
+  }, "Date must be in the future"),
+  time: z.string().min(1, "Please select a time"),
+  notes: z.string(),
+});
 
 const ContactPage = () => {
   const [contactForm, setContactForm] = useState({
@@ -14,6 +36,14 @@ const ContactPage = () => {
     time: "",
     notes: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [message, setMessage] = useState({ type: "", text: "" });
+
+  const inputStyle =
+    "w-full p-3 rounded-xl bg-[#111827] border border-gray-700 focus:ring-2 focus:ring-purple-500 outline-none text-white placeholder-gray-400";
+  const buttonStyle = `w-full bg-purple-600 hover:bg-purple-700 transition rounded-xl font-semibold py-3 ${
+    isSubmitting ? "opacity-75 cursor-not-allowed" : ""
+  }`;
 
   const handleContactChange = (e) => {
     const { name, value } = e.target;
@@ -25,39 +55,90 @@ const ContactPage = () => {
     setScheduleForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleContactSubmit = (e) => {
+  const handleContactSubmit = async (e) => {
     e.preventDefault();
-    alert("Message sent!");
-    setContactForm({ name: "", email: "", message: "" });
+    setIsSubmitting(true);
+
+    try {
+      // Validate form data
+      const validatedData = contactSchema.parse(contactForm);
+
+      // Make API call
+      const response = await axios.post(
+        "http://localhost:3001/contact",
+        validatedData
+      );
+
+      toast.success("Message sent successfully!");
+      setContactForm({ name: "", email: "", message: "" });
+      setMessage({ type: "success", text: response.data.message });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        // Validation error
+        toast.error(error.errors[0].message);
+      } else {
+        // API error
+        toast.error(error.response?.data?.error || "Failed to send message");
+      }
+      setMessage({ type: "error", text: error.message });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const handleScheduleSubmit = (e) => {
+  const handleScheduleSubmit = async (e) => {
     e.preventDefault();
-    alert(
-      `Interview scheduled on ${scheduleForm.date} at ${scheduleForm.time}`
-    );
-    setScheduleForm({ name: "", email: "", date: "", time: "", notes: "" });
+    setIsSubmitting(true);
+
+    try {
+      // Validate form data
+      const validatedData = scheduleSchema.parse(scheduleForm);
+
+      // Make API call
+      const response = await axios.post(
+        "http://localhost:3001/schedule",
+        validatedData
+      );
+
+      toast.success("Interview scheduled successfully!");
+      setScheduleForm({
+        name: "",
+        email: "",
+        date: "",
+        time: "",
+        notes: "",
+      });
+      setMessage({ type: "success", text: response.data.message });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        toast.error(error.errors[0].message);
+      } else {
+        toast.error(
+          error.response?.data?.error || "Failed to schedule interview"
+        );
+      }
+      setMessage({ type: "error", text: error.message });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const generateTimeSlots = () => {
     const slots = [];
     for (let hour = 7; hour <= 20; hour++) {
-      const formatted = `${hour > 12 ? hour - 12 : hour}:00 ${
-        hour < 12 ? "AM" : "PM"
-      }`;
-      slots.push(formatted);
+      slots.push(
+        `${hour > 12 ? hour - 12 : hour}:00 ${hour < 12 ? "AM" : "PM"}`
+      );
     }
     return slots;
   };
 
   return (
     <section className="min-h-screen flex items-center justify-center px-4 py-12">
-      {" "}
-      {/*bg-gradient-to-br from-black via-indigo-900 to-blue-950 */}
       <div className="grid md:grid-cols-2 gap-10 w-full max-w-6xl">
-        {/* LEFT PANEL */}
+        {/* Left Panel */}
         <div className="text-white flex flex-col justify-center">
-          <h2 className="text-4xl font-extrabold mb-4">Let’s Talk</h2>
+          <h2 className="text-4xl font-extrabold mb-4">Let's Talk</h2>
           <p className="mb-4 text-gray-300">
             Interested in working together or booking an interview? Drop a
             message or schedule a call below.
@@ -75,56 +156,59 @@ const ContactPage = () => {
             </div>
           </div>
 
-          {/* Book Interview Section */}
+          {/* Interview Scheduler */}
           <div className="mt-8">
             <h3 className="text-xl font-bold mb-2">Book an Interview</h3>
             <button
               onClick={() => setShowScheduler((prev) => !prev)}
-              className="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-5 py-3 rounded-xl shadow-md transition"
+              className={buttonStyle}
             >
               {showScheduler ? "Hide Scheduler" : "Schedule Now"}
             </button>
 
-            {/* Scheduling Form */}
             {showScheduler && (
               <form
                 onSubmit={handleScheduleSubmit}
-                className="mt-6 space-y-4 bg-[#1e1e3f] p-6 rounded-2xl shadow-lg transition-all"
+                className="mt-6 space-y-4 bg-[#1e1e3f] p-6 rounded-2xl shadow-lg"
               >
                 <input
                   type="text"
                   name="name"
                   value={scheduleForm.name}
                   onChange={handleScheduleChange}
-                  placeholder="Your Name"
-                  className="w-full p-3 rounded-xl bg-[#111827] border border-gray-700 focus:ring-2 focus:ring-purple-500 outline-none"
+                  placeholder="Name"
+                  className={inputStyle}
                   required
+                  disabled={isSubmitting}
                 />
                 <input
                   type="email"
                   name="email"
                   value={scheduleForm.email}
                   onChange={handleScheduleChange}
-                  placeholder="Your Email"
-                  className="w-full p-3 rounded-xl bg-[#111827] border border-gray-700 focus:ring-2 focus:ring-purple-500 outline-none"
+                  placeholder="Email"
+                  className={inputStyle}
                   required
+                  disabled={isSubmitting}
                 />
                 <input
                   type="date"
                   name="date"
                   value={scheduleForm.date}
                   onChange={handleScheduleChange}
-                  className="w-full p-3 rounded-xl bg-[#111827] border border-gray-700 text-gray-300 focus:ring-2 focus:ring-purple-500 outline-none"
+                  className={`${inputStyle} [&::-webkit-calendar-picker-indicator]:invert`}
                   required
+                  disabled={isSubmitting}
                 />
                 <select
                   name="time"
                   value={scheduleForm.time}
                   onChange={handleScheduleChange}
-                  className="w-full p-3 rounded-xl bg-[#111827] border border-gray-700 text-gray-300 focus:ring-2 focus:ring-purple-500 outline-none"
+                  className={inputStyle}
                   required
+                  disabled={isSubmitting}
                 >
-                  <option value="">Select a time</option>
+                  <option value="">Select time</option>
                   {generateTimeSlots().map((slot) => (
                     <option key={slot} value={slot}>
                       {slot}
@@ -137,57 +221,74 @@ const ContactPage = () => {
                   onChange={handleScheduleChange}
                   placeholder="Additional Notes (optional)"
                   rows="3"
-                  className="w-full p-3 rounded-xl bg-[#111827] border border-gray-700 focus:ring-2 focus:ring-purple-500 outline-none"
+                  className={inputStyle}
+                  disabled={isSubmitting}
                 />
                 <button
                   type="submit"
-                  className="w-full bg-purple-600 hover:bg-purple-700 transition rounded-xl font-semibold py-3"
+                  className={buttonStyle}
+                  disabled={isSubmitting}
                 >
-                  Submit Booking
+                  {isSubmitting ? "Scheduling..." : "Submit Booking"}
                 </button>
               </form>
             )}
           </div>
         </div>
 
-        {/* RIGHT PANEL (Contact Form) */}
+        {/* Right Panel - Contact Form */}
         <form
           onSubmit={handleContactSubmit}
           className="bg-[#0e0e2a] text-white p-8 rounded-3xl shadow-[inset_20px_20px_60px_#0a0a1a,inset_-20px_-20px_60px_#12123a]"
         >
           <h2 className="text-3xl font-bold mb-6">Send a Message</h2>
+          {message.text && (
+            <div
+              className={`mb-4 p-3 rounded ${
+                message.type === "success"
+                  ? "bg-green-600/20 text-green-400"
+                  : "bg-red-600/20 text-red-400"
+              }`}
+            >
+              {message.text}
+            </div>
+          )}
           <input
             type="text"
             name="name"
             value={contactForm.name}
             onChange={handleContactChange}
-            placeholder="Your Name"
-            className="w-full mb-4 p-4 rounded-xl bg-[#111827] border border-gray-700 focus:ring-2 focus:ring-purple-500 outline-none"
+            placeholder="Name"
+            className={inputStyle}
             required
+            disabled={isSubmitting}
           />
           <input
             type="email"
             name="email"
             value={contactForm.email}
             onChange={handleContactChange}
-            placeholder="Your Email"
-            className="w-full mb-4 p-4 rounded-xl bg-[#111827] border border-gray-700 focus:ring-2 focus:ring-purple-500 outline-none"
+            placeholder="Email"
+            className={inputStyle}
             required
+            disabled={isSubmitting}
           />
           <textarea
             name="message"
             value={contactForm.message}
             onChange={handleContactChange}
-            placeholder="Your Message"
+            placeholder="Message"
             rows="5"
-            className="w-full mb-4 p-4 rounded-xl bg-[#111827] border border-gray-700 focus:ring-2 focus:ring-purple-500 outline-none"
+            className={inputStyle}
             required
+            disabled={isSubmitting}
           />
           <button
             type="submit"
-            className="w-full bg-purple-600 hover:bg-purple-700 transition rounded-xl font-semibold py-3"
+            className={buttonStyle}
+            disabled={isSubmitting}
           >
-            Send Message
+            {isSubmitting ? "Sending..." : "Send Message"}
           </button>
         </form>
       </div>
