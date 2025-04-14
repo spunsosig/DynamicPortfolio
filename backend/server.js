@@ -5,41 +5,53 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const compression = require('compression');
 require('dotenv').config();
+const { csrfProtection, preventParamPollution, sanitizeData } = require('./utils/security');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Security middleware
+// Libraries 
+app.use(express.json({ limit: '10kb' }));
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 app.use(helmet());
-app.use(compression());
+app.use(compression({
+  level: 6,
+  threshold: 100 * 1000, // 100kb
+  filter: (req, res) => {
+    if (req.headers['x-no-compression']) {
+      return false;
+    }
+    return compression.filter(req, res);
+  }
+}));
 
-// CORS configuration
+// CORS
 app.use(cors({
   origin: process.env.FRONTEND_URL || 'http://localhost:5173',
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// Rate limiting
+// Security 
+app.use(sanitizeData);
+app.use(preventParamPollution);
+
+// Rate limiting (after sanitization for clean data)
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100,
-  message: 'Too many requests from this IP, please try again later.'
+  max: 100, // IP request limit
+  message: 'Too many requests, please try again later.',
+  standardHeaders: true, 
+  legacyHeaders: false, 
 });
 
-// Apply rate limiting to specific routes
-app.use('/api/contact', limiter);
-app.use('/api/schedule', limiter);
-
-// Body parser with size limits
-app.use(express.json({ limit: '10kb' }));
-app.use(express.urlencoded({ extended: true, limit: '10kb' }));
+app.use('/api/', limiter);
 
 // Routes
 app.use('/api/contact', require('./routes/contact'));
 app.use('/api/schedule', require('./routes/schedule'));
 
-// Serve static files from the React build
+// Serve static files
 app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
 // // Handle React routing, return all requests to React app

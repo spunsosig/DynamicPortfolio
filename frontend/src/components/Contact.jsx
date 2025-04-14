@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
+import { Loader } from 'lucide-react';
 import { z } from "zod";
 import axios from "axios";
 
-// Validation schemas
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+
+// Validation with Zod
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Invalid email address"),
@@ -40,7 +43,8 @@ const ContactPage = () => {
   const [message, setMessage] = useState({ type: "", text: "" });
 
   const inputStyle =
-    "w-full p-3 rounded-xl bg-[#111827] border border-gray-700 focus:ring-2 focus:ring-purple-500 outline-none text-white placeholder-gray-400";
+  "w-full p-3 mb-6 rounded-xl bg-[#111827] border border-gray-700 focus:ring-2 focus:ring-purple-500 outline-none text-white placeholder-gray-400";
+
   const buttonStyle = `w-full bg-purple-600 hover:bg-purple-700 transition rounded-xl font-semibold py-3 ${
     isSubmitting ? "opacity-75 cursor-not-allowed" : ""
   }`;
@@ -61,26 +65,23 @@ const ContactPage = () => {
 
     try {
       // Validate form data
-      const validatedData = contactSchema.parse(contactForm);
+      const validatedData = contactSchema.safeParse(contactForm);
+      
+      if (!validatedData.success) {
+        toast.error(validatedData.error.errors[0].message);
+        return;
+      }
 
       // Make API call
       const response = await axios.post(
-        "http://localhost:3001/contact",
-        validatedData
+        `${API_URL}/api/contact`,
+        validatedData.data
       );
 
       toast.success("Message sent successfully!");
       setContactForm({ name: "", email: "", message: "" });
-      setMessage({ type: "success", text: response.data.message });
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        // Validation error
-        toast.error(error.errors[0].message);
-      } else {
-        // API error
-        toast.error(error.response?.data?.error || "Failed to send message");
-      }
-      setMessage({ type: "error", text: error.message });
+      toast.error(error.response?.data?.error || "Failed to send message");
     } finally {
       setIsSubmitting(false);
     }
@@ -96,7 +97,7 @@ const ContactPage = () => {
 
       // Make API call
       const response = await axios.post(
-        "http://localhost:3001/schedule",
+        `${API_URL}/api/schedule`,
         validatedData
       );
 
@@ -140,13 +141,12 @@ const ContactPage = () => {
         <div className="text-white flex flex-col justify-center">
           <h2 className="text-4xl font-extrabold mb-4">Let's Talk</h2>
           <p className="mb-4 text-gray-300">
-            Interested in working together or booking an interview? Drop a
-            message or schedule a call below.
+            Reach out or book an interview with me. I would love to hear from you!
           </p>
 
           <div className="space-y-3 text-lg font-mono text-purple-400">
             <a href="mailto:tamal@tamalsen.dev" className="hover:underline">
-              tamal@tamalsen.dev
+              test@gmail.com
             </a>
             <div className="flex gap-4 text-sm text-white">
               <a href="#">Messenger</a>
@@ -229,7 +229,14 @@ const ContactPage = () => {
                   className={buttonStyle}
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? "Scheduling..." : "Submit Booking"}
+                  {isSubmitting ? (
+                    <span className="flex items-center justify-center">
+                      <Loader className="animate-spin mr-2" size={16} />
+                      Scheduling...
+                    </span>
+                  ) : (
+                    "Submit Booking"
+                  )}
                 </button>
               </form>
             )}
@@ -238,8 +245,8 @@ const ContactPage = () => {
 
         {/* Right Panel - Contact Form */}
         <form
-          onSubmit={handleContactSubmit}
-          className="bg-[#0e0e2a] text-white p-8 rounded-3xl shadow-[inset_20px_20px_60px_#0a0a1a,inset_-20px_-20px_60px_#12123a]"
+           onSubmit={handleContactSubmit}
+           className="bg-[#0e0e2a] text-white p-8 rounded-3xl shadow-[inset_20px_20px_60px_#0a0a1a,inset_-20px_-20px_60px_#12123a] space-y-6"
         >
           <h2 className="text-3xl font-bold mb-6">Send a Message</h2>
           {message.text && (
@@ -288,7 +295,14 @@ const ContactPage = () => {
             className={buttonStyle}
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Sending..." : "Send Message"}
+            {isSubmitting ? (
+              <span className="flex items-center justify-center">
+                <Loader className="animate-spin mr-2" size={16} />
+                Sending...
+              </span>
+            ) : (
+              "Send Message"
+            )}
           </button>
         </form>
       </div>
