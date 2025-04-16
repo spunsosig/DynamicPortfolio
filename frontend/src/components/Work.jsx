@@ -69,12 +69,14 @@ const Work = () => {
               <div
                 className={`overflow-hidden h-full transition-all duration-300 ease-in-out ${
                   openIndex === index
-                    ? "max-h-40 md:max-h-full opacity-100 mt-2"
+                    ? "max-h-[40vh] md:max-h-full opacity-100 mt-2"
                     : "max-h-0 opacity-0"
                 }`}
               >
-                <div className="text-gray-200 px-10 py-5 bg-[#301616] rounded-md">
-                  {job.details}
+                <div className="text-gray-200 px-10 py-5 bg-[#301616] rounded-md overflow-hidden">
+                  <p className="line-clamp-5 md:line-clamp-none">
+                    {job.details}
+                  </p>
                 </div>
               </div>
             </div>
