@@ -32,6 +32,20 @@ body {
   );
 }
 
+.hero-bottom-gradient {
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 1) 20px,
+    rgba(0, 0, 0, 0) 70px
+  );
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 6rem;
+  pointer-events: none;
+}
+
 .topnav ul li a {
   color: #dcedff;
   text-decoration: none;
