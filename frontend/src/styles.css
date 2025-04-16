@@ -13,7 +13,7 @@
 }
 
 .icon-style:hover {
-  color: #d1d5db; /* Tailwind's gray-300 */
+  color: #d1d5db;
 }
 
 html,
@@ -43,17 +43,26 @@ body {
 }
 
 .title-section {
-  background-image: url("assets/background.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  position: relative;
   min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background: transparent;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  text-align: center;
-  color: white;
+  justify-content: center;
+}
+
+.background-video {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: 0;
+  object-fit: cover;
 }
 
 .page-section {
@@ -79,9 +88,12 @@ body {
 }
 
 .main-subtitle {
+  position: relative;
+  z-index: 1;
   text-align: center;
   font-size: 4rem;
-  color: #dcedff;
+  color: #aaaaaa;
+  margin-top: 30vh;
 }
 
 .sections {
