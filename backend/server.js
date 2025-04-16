@@ -1,19 +1,35 @@
 const express = require('express');
 const path = require('path');
+require('dotenv').config({
+  path: path.join(__dirname, 'env', `.env.${process.env.NODE_ENV || 'development'}`)
+});
+const validateEnv = require('./config/validateEnv');
+validateEnv();
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const compression = require('compression');
-require('dotenv').config();
 const { csrfProtection, preventParamPollution, sanitizeData } = require('./utils/security');
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT;
 
 // Libraries 
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],  
+      styleSrc: ["'self'", "'unsafe-inline'"], 
+      scriptSrc: ["'self'"],  
+      imgSrc: ["'self'", "data:", "https:"], 
+      connectSrc: ["'self'", process.env.FRONTEND_URL]  
+    }
+  },
+  crossOriginEmbedderPolicy: true,
+  crossOriginOpenerPolicy: true
+}));
 app.use(compression({
   level: 6,
   threshold: 100 * 1000, // 100kb
@@ -25,11 +41,14 @@ app.use(compression({
   }
 }));
 
-// CORS
+// CORS configuration with environment check
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  origin: process.env.NODE_ENV === 'development'
+    ? ['http://localhost:5173', 'http://127.0.0.1:5173']
+    : process.env.FRONTEND_URL,
   methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 }));
 
 // Security 
