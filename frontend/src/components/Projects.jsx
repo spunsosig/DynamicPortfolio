@@ -90,7 +90,7 @@ const Projects = () => {
     <section
       id="projects"
       ref={sectionRef}
-      className="page-section py-16 h-screen text-white flex flex-col justify-center"
+      className="page-section py-16 text-white flex flex-col justify-center"
     >
       <h2 className="section-heading text-4xl font-extrabold text-center mb-10" ref={headingRef}>
         Projects
