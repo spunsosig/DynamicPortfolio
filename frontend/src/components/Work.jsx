@@ -54,7 +54,7 @@ const Work = () => {
                 className="work-dropdown cursor-pointer transition-all duration-200 hover:bg-red-800 hover:scale-[1.02]"
                 onClick={() => toggleSection(index)}
               >
-                <span className="work-headings">{job.title}</span>
+                <span className="work-headings truncate flex-1 mr-4">{job.title}</span>
                 <span className="flex items-center gap-2">
                   <span className="work-headings">{job.years}</span>
                   <ChevronDown
@@ -67,9 +67,9 @@ const Work = () => {
 
               {/* Animated Content */}
               <div
-                className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                className={`overflow-hidden h-full transition-all duration-300 ease-in-out ${
                   openIndex === index
-                    ? "max-h-40 opacity-100 mt-2"
+                    ? "max-h-40 md:max-h-full opacity-100 mt-2"
                     : "max-h-0 opacity-0"
                 }`}
               >
