@@ -5,6 +5,7 @@ import PlaceHolderImage from "../assets/elementor-placeholder-image.webp";
 const Projects = () => {
   const carouselRef = useRef(null);
   const sectionRef = useRef(null); // 🆕 section ref
+  const headingRef = useRef(null);
 
   const projects = [
     {
@@ -32,39 +33,55 @@ const Projects = () => {
   useEffect(() => {
     const el = carouselRef.current;
     const section = sectionRef.current;
-
+    const heading = headingRef.current;
+    let lastScrollTime = 0;
+    const scrollCooldown = 250;
+  
     const onWheel = (e) => {
-
+      const currentTime = performance.now();
+      
       const sectionRect = section.getBoundingClientRect();
+      const headingRect = heading.getBoundingClientRect();
+  
       const isInView =
-      sectionRect.top <= window.innerHeight * 0.2 && // Only when 20% or less of the viewport height is above the section
-      sectionRect.bottom >= window.innerHeight * 0.8; // And when 80% or more of the section is visible
-
+        headingRect.top <= window.innerHeight * 0.2 &&
+        sectionRect.bottom >= window.innerHeight * 0.6 &&
+        headingRect.bottom >= 0;
+  
       if (!isInView) return;
-
+  
+      // Check cooldown except at boundaries
       const scrollLeft = el.scrollLeft;
       const maxScrollLeft = el.scrollWidth - el.clientWidth;
-
-      // Adjust scroll sensitivity and direction
-      const scrollAmount = e.deltaY > 0 ? 350 : -350; // Fixed scroll amount
-      const newScrollLeft = scrollLeft + scrollAmount;
-
-      // Check boundaries
       const atStart = scrollLeft <= 0;
       const atEnd = scrollLeft >= maxScrollLeft - 5;
-
       const scrollingDown = e.deltaY > 0;
       const scrollingUp = e.deltaY < 0;
-
+  
+      // Allow immediate scroll at boundaries
+      if ((atStart && scrollingUp) || (atEnd && scrollingDown)) {
+        return;
+      }
+  
+      // Apply cooldown for carousel scrolling
+      if (currentTime - lastScrollTime < scrollCooldown) {
+        e.preventDefault();
+        return;
+      }
+  
+      const scrollAmount = e.deltaY > 0 ? 350 : -350;
+      const newScrollLeft = scrollLeft + scrollAmount;
+  
       if ((scrollingDown && !atEnd) || (scrollingUp && !atStart)) {
         e.preventDefault();
         el.scrollTo({
           left: Math.max(0, Math.min(newScrollLeft, maxScrollLeft)),
           behavior: "smooth",
         });
+        lastScrollTime = currentTime;
       }
     };
-
+  
     window.addEventListener("wheel", onWheel, { passive: false });
     return () => window.removeEventListener("wheel", onWheel);
   }, []);
@@ -73,16 +90,20 @@ const Projects = () => {
     <section
       id="projects"
       ref={sectionRef}
-      className="page-section py-16 pl-64 h-screen text-white flex flex-col justify-center"
+      className="page-section py-16 h-screen text-white flex flex-col justify-center"
     >
-      <h2 className="section-heading text-4xl font-extrabold text-center mb-10">
+      <h2 className="section-heading text-4xl font-extrabold text-center mb-10" ref={headingRef}>
         Projects
       </h2>
 
       <div
         ref={carouselRef}
-        className="flex overflow-x-auto gap-6 px-10 py-10" //snap-x snap-mandatory
-        style={{ scrollBehavior: "smooth" }}
+        className="flex overflow-x-auto gap-6 px-10 py-10 ml-0 sm:ml-24" //snap-x snap-mandatory
+        style={{ 
+          scrollBehavior: "smooth",
+          msOverflowStyle: "none",  /* IE and Edge */
+          scrollbarWidth: "none",   /* Firefox */
+        }}
       >
         {projects.map((project, index) => (
           <div
