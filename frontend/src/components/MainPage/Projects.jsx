@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import projectsData from "../data/ProjectsData";
+import projectsData from "../../data/ProjectsData";
 
 const Projects = () => {
   const carouselRef = useRef(null);

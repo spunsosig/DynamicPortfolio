@@ -1,5 +1,5 @@
 import Card from './Card';
-import expertiseData from '../data/expertiseData';
+import expertiseData from '../../data/expertiseData';
 
 const Expertise = () => {
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import workData from "../data/workData"; // Assuming you have a workData.js file with the work experience data
+import workData from "../../data/workData"; // Assuming you have a workData.js file with the work experience data
 
 const Work = () => {
   const [openIndex, setOpenIndex] = useState(null);

@@ -1,13 +1,13 @@
 import React, { useRef, useEffect, useState } from "react";
-import Header from "./components/Header";
-import Expertise from "./components/Expertise";
-import Hero from "./components/Hero";
-import Contact from "./components/Contact";
-import Projects from "./components/Projects";
-import Work from "./components/Work";
-import SideNav from "./components/sideNav";
+import Header from "./components/MainPage/Header";
+import Expertise from "./components/MainPage/Expertise";
+import Hero from "./components/MainPage/Hero";
+import Contact from "./components/MainPage/Contact";
+import Projects from "./components/MainPage/Projects";
+import Work from "./components/MainPage/Work";
+import SideNav from "./components/MainPage/SideNav";
 import { Toaster } from 'react-hot-toast';
-import ErrorBoundary from './components/ErrorBoundary';
+import ErrorBoundary from './components/MainPage/ErrorBoundary';
 
 function App() {
   const homePageRef = useRef(null);
