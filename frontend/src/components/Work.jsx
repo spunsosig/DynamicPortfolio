@@ -1,30 +1,6 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-
-const workExperience = [
-  {
-    title: "Burger King",
-    years: "2022–2025",
-    details:
-      "Worked on flame-grilled algorithms. Managed ketchup distribution at scale Worked on flame-grilled algorithms. Managed ketchup distribution at scale. Worked on flame-grilled algorithms. Managed ketchup distribution at scale. Worked on flame-grilled algorithms. Managed ketchup distribution at scale. Worked on flame-grilled algorithms. Managed ketchup distribution at scale..",
-  },
-  {
-    title: "Mcdonalds",
-    years: "2020–2022",
-    details: "Optimized fry crispiness. Led Big Mac innovation pipeline.",
-  },
-  {
-    title: "UFC Heavyweight Champion",
-    years: "2018–2020",
-    details:
-      "Won title with 1 punch. Managed a side hustle in jiu-jitsu automation.",
-  },
-  {
-    title: "Meta",
-    years: "2016–2018",
-    details: "Built VR memes. Accidentally launched the metaverse.",
-  },
-];
+import workData from "../data/workData"; // Assuming you have a workData.js file with the work experience data
 
 const Work = () => {
   const [openIndex, setOpenIndex] = useState(null);
@@ -48,7 +24,7 @@ const Work = () => {
       <h2 className="font-extrabold section-heading">Work</h2>
       <div className="flex flex-col justify-center items-center">
         <div className="w-3/6 flex flex-col rounded-xl justify-center items-start px-10 space-y-5 pt-5 pb-5">
-          {workExperience.map((job, index) => (
+          {workData.map((job, index) => (
             <div key={index} className="w-full">
               <div
                 className="work-dropdown cursor-pointer transition-all duration-200 hover:bg-red-800 hover:scale-[1.02]"

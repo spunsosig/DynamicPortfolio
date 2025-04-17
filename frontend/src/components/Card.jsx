@@ -1,15 +1,15 @@
-import { Code } from "lucide-react"
-
-const Card = (props) => {
+const Card = ({ icon, title, description }) => {
     return(
         <div className="max-w-sm p-8 rounded-xl text-white shadow-md min-h-100 myCard duration-300 hover:scale-105 hover:z-10">
             
             {/* Icon */}
             <div className="mb-4 flex flex-row">
-                <Code className="w-10 h-10 text-white mr-5" />
-                <h2 className="text-3xl font-bold mb-5 h-auto">{props.title}</h2>
+                <div className="text-3xl w-16 h-16 flex items-center justify-center">
+                    {icon}
+                </div>
+                <h2 className="text-3xl font-bold mb-5 h-[110px]">{title}</h2>
             </div>
-            <p className="text-lg h-auto">{props.description}</p>
+            <p className="text-lg h-auto">{description}</p>
         </div>
     );
 };

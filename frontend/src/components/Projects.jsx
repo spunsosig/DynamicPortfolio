@@ -1,34 +1,10 @@
 import React, { useRef, useEffect } from "react";
-import ReactWebsiteImage from "../assets/react-website.png";
-import PlaceHolderImage from "../assets/elementor-placeholder-image.webp";
+import projectsData from "../data/ProjectsData";
 
 const Projects = () => {
   const carouselRef = useRef(null);
   const sectionRef = useRef(null); // 🆕 section ref
   const headingRef = useRef(null);
-
-  const projects = [
-    {
-      title: "React Portfolio",
-      description: "The portfolio website you are currently viewing.",
-      image: ReactWebsiteImage,
-    },
-    {
-      title: "Project 2",
-      description: "Description for project 2",
-      image: PlaceHolderImage,
-    },
-    {
-      title: "Project 3",
-      description: "Description for project 3",
-      image: PlaceHolderImage,
-    },
-    {
-      title: "Project 4",
-      description: "Description for project 4",
-      image: PlaceHolderImage,
-    },
-  ];
 
   useEffect(() => {
     const el = carouselRef.current;
@@ -105,7 +81,7 @@ const Projects = () => {
           scrollbarWidth: "none",   /* Firefox */
         }}
       >
-        {projects.map((project, index) => (
+        {projectsData.map((project, index) => (
           <div
             key={index}
             className="shrink-0 w-[700px] h-[500px] bg-gray-800 text-white rounded-2xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:z-10" //snap-center
