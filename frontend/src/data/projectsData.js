@@ -8,20 +8,31 @@ const projectsData = [
         image: ReactWebsiteImage,
     },
     {
-        title: "Project 2",
+        title: "HealthMaxx: Fitness Mobile App",
         description: "Description for project 2",
         image: PlaceHolderImage,
     },
     {
-        title: "Project 3",
+        title: "Cinema Mobile App",
         description: "Description for project 3",
         image: PlaceHolderImage,
     },
     {
-        title: "Project 4",
+        title: "HDC Ecommerce Website",
         description: "Description for project 4",
         image: PlaceHolderImage,
     },
+    {
+        title: "Python ASCII Art Generator",
+        description: "Description for project 4",
+        image: PlaceHolderImage,
+    },
+    {
+        title: "Reader's republic Ecommerce book store",
+        description: "Description for project 4",
+        image: PlaceHolderImage,
+    },
+    
 ]
 
 export default projectsData;
