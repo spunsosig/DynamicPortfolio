@@ -8,7 +8,10 @@ const requiredEnvVars = [
   'EMAIL_USER',
   'EMAIL_PASS',
   'NODE_ENV',
-  'EMAIL_SERVICE'
+  'EMAIL_SERVICE',
+  'JWT_SECRET',
+  'ADMIN_USERNAME',
+  'ADMIN_PASSWORD'
 ];
 
 function validateEnv() {

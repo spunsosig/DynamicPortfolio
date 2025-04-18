@@ -11,6 +11,12 @@ const rateLimit = require('express-rate-limit');
 const compression = require('compression');
 const { csrfProtection, preventParamPollution, sanitizeData } = require('./utils/security');
 
+// Import routes
+const contactRoutes = require('./routes/contact');
+const scheduleRoutes = require('./routes/schedule');
+const adminRoutes = require('./routes/admin');
+const projectRoutes = require('./routes/project');
+
 const app = express();
 const PORT = process.env.PORT;
 
@@ -30,6 +36,7 @@ app.use(helmet({
   crossOriginEmbedderPolicy: true,
   crossOriginOpenerPolicy: true
 }));
+
 app.use(compression({
   level: 6,
   threshold: 100 * 1000, // 100kb
@@ -41,14 +48,15 @@ app.use(compression({
   }
 }));
 
-// CORS configuration with environment check
+// CORS configuration
 app.use(cors({
   origin: process.env.NODE_ENV === 'development'
     ? ['http://localhost:5173', 'http://127.0.0.1:5173']
     : process.env.FRONTEND_URL,
-  methods: ['GET', 'POST'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Added PUT/DELETE for admin commands
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
+  credentials: true,
+  optionsSuccessStatus: 200
 }));
 
 // Security 
@@ -66,24 +74,25 @@ const limiter = rateLimit({
 
 app.use('/api/', limiter);
 
-// Routes
-app.use('/api/contact', require('./routes/contact'));
-app.use('/api/schedule', require('./routes/schedule'));
+// Serve static files (uploaded images)
+app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
+
+// API Routes
+app.use('/api/contact', contactRoutes);
+app.use('/api/schedule', scheduleRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/projects', projectRoutes);
 
 // Serve static files
 app.use(express.static(path.join(__dirname, '../frontend/dist')));
-
-// // Handle React routing, return all requests to React app
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
-// });
 
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ 
-    error: 'Internal Server Error',
-    message: process.env.NODE_ENV === 'development' ? err.message : 'Something went wrong'
+    error: process.env.NODE_ENV === 'development' 
+      ? err.message 
+      : 'Internal server error' 
   });
 });
 
@@ -94,9 +103,17 @@ app.use((req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+  console.log(`Frontend URL: ${process.env.FRONTEND_URL}`);
+  console.log(`Environment: ${process.env.NODE_ENV}`);
+});
+
+// Handle uncaught exceptions
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err);
+  process.exit(1);
 });
 
 process.on('unhandledRejection', (err) => {
-  console.error('Unhandled rejection:', err);
+  console.error('Unhandled Rejection:', err);
   process.exit(1);
 });
