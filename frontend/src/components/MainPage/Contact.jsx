@@ -179,7 +179,7 @@ const ContactPage = () => {
             {showScheduler && (
               <form
                 onSubmit={handleScheduleSubmit}
-                className="mt-6 space-y-4 bg-[#1e1e3f] p-6 rounded-2xl shadow-lg"
+                className="mt-6 space-y-4 contact-form p-6 rounded-2xl shadow-lg"
               >
                 <input
                   type="text"
@@ -256,7 +256,7 @@ const ContactPage = () => {
         {/* Right Panel - Contact Form */}
         <form
            onSubmit={handleContactSubmit}
-           className="bg-[#0e0e2a] text-white p-8 rounded-3xl shadow-[inset_20px_20px_60px_#0a0a1a,inset_-20px_-20px_60px_#12123a] space-y-6"
+           className="contact-form"
         >
           <h2 className="text-3xl font-bold mb-6">Send a Message</h2>
           {message.text && (

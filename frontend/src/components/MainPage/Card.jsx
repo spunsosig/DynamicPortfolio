@@ -1,6 +1,6 @@
 const Card = ({ icon, title, description }) => {
     return(
-        <div className="max-w-sm p-8 rounded-xl text-white shadow-md min-h-100 myCard duration-300 hover:scale-105 hover:z-10">
+        <div className="contact-form max-w-sm p-8 rounded-xl text-white shadow-md min-h-100 myCard duration-300 hover:scale-105 hover:z-10">
             
             {/* Icon */}
             <div className="mb-4 flex flex-row">
