@@ -1,8 +1,3 @@
-const validateEmail = (email) => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
-};
-
 const validateContactInput = (data) => {
     const errors = [];
 
@@ -75,7 +70,6 @@ const validateScheduleDate = (date) => {
 };
 
 module.exports = { 
-    validateEmail,
     validateContactInput,
     validateScheduleInput,
     validateScheduleTime,

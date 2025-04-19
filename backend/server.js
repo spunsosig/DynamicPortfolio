@@ -9,13 +9,13 @@ const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const compression = require('compression');
+const session = require('express-session');
 const { csrfProtection, preventParamPollution, sanitizeData } = require('./utils/security');
 
 // Import routes
 const contactRoutes = require('./routes/contact');
 const scheduleRoutes = require('./routes/schedule');
 const adminRoutes = require('./routes/admin');
-const projectRoutes = require('./routes/project');
 
 const app = express();
 const PORT = process.env.PORT;
@@ -26,15 +26,21 @@ app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 app.use(helmet({
   contentSecurityPolicy: {
     directives: {
-      defaultSrc: ["'self'"],  
-      styleSrc: ["'self'", "'unsafe-inline'"], 
-      scriptSrc: ["'self'"],  
-      imgSrc: ["'self'", "data:", "https:"], 
-      connectSrc: ["'self'", process.env.FRONTEND_URL]  
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+      scriptSrc: ["'self'", "'unsafe-inline'"],
+      imgSrc: ["'self'", "data:", "https:"],
+      connectSrc: ["'self'", process.env.FRONTEND_URL],
+      frameSrc: "none"
     }
   },
-  crossOriginEmbedderPolicy: true,
-  crossOriginOpenerPolicy: true
+  crossOriginEmbedderPolicy: process.env.NODE_ENV === 'production',
+  crossOriginOpenerPolicy: process.env.NODE_ENV === 'production',
+  hidePoweredBy: true,
+  hsts: true,
+  noSniff: true,
+  referrerPolicy: { policy: 'same-origin' }
 }));
 
 app.use(compression({
@@ -45,6 +51,16 @@ app.use(compression({
       return false;
     }
     return compression.filter(req, res);
+  }
+}));
+
+// Add cookie security
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  cookie: {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict'
   }
 }));
 
@@ -74,17 +90,23 @@ const limiter = rateLimit({
 
 app.use('/api/', limiter);
 
-// Serve static files (uploaded images)
-app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
-
 // API Routes
 app.use('/api/contact', contactRoutes);
 app.use('/api/schedule', scheduleRoutes);
 app.use('/api/admin', adminRoutes);
-app.use('/api/projects', projectRoutes);
 
 // Serve static files
 app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
+// Serve static files (uploaded images)
+app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
+
+
+// Client-side routing
+app.get('/*path', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+});
+
 
 // Error handling middleware
 app.use((err, req, res, next) => {

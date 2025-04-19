@@ -3,6 +3,7 @@ import { toast } from "react-hot-toast";
 import { Loader } from 'lucide-react';
 import { z } from "zod";
 import axios from "axios";
+import api from '../../utils/api';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -68,17 +69,12 @@ const ContactPage = () => {
 
     try {
         const validatedData = contactSchema.safeParse(contactForm);
-        
         if (!validatedData.success) {
             toast.error(validatedData.error.errors[0].message);
             return;
         }
 
-        const response = await axios.post(
-            `${API_URL}/api/contact`,
-            validatedData.data
-        );
-
+        const response = await api.post('/api/contact', validatedData.data);
         toast.success("Message sent successfully!");
         setContactForm({ name: "", email: "", message: "" });
         setMessage({ type: "success", text: response.data.message });
