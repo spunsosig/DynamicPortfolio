@@ -5,6 +5,7 @@ import { Toaster } from 'react-hot-toast'
 import './styles.css'
 import App from './App.jsx'
 import AdminApp from './AdminApp.jsx'
+import ProjectBlog from './ProjectBlog.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -13,6 +14,7 @@ createRoot(document.getElementById('root')).render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/admin/*" element={<AdminApp />} />
+        <Route path="/projects" element={<ProjectBlog/>}></Route>
       </Routes>
     </BrowserRouter>
   </StrictMode>

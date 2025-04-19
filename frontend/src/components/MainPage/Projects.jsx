@@ -1,10 +1,16 @@
 import React, { useRef, useEffect } from "react";
 import projectsData from "../../data/ProjectsData";
+import { useNavigate } from 'react-router-dom';
 
 const Projects = () => {
+  const navigate = useNavigate();
   const carouselRef = useRef(null);
   const sectionRef = useRef(null); // 🆕 section ref
   const headingRef = useRef(null);
+
+  const navigateToProjects = (projectId) => {
+    navigate(`/projects?id=${projectId}`);
+  }
 
   useEffect(() => {
     const el = carouselRef.current;
@@ -84,7 +90,8 @@ const Projects = () => {
         {projectsData.map((project, index) => (
           <div
             key={index}
-            className="shrink-0 w-[700px] h-[500px] bg-gray-800 text-white rounded-2xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:z-10" //snap-center
+            onClick={() => navigateToProjects(project.id)}
+            className="shrink-0 w-[700px] h-[500px] bg-gray-800 text-white rounded-2xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:z-10"
           >
             <img
               src={project.image}
