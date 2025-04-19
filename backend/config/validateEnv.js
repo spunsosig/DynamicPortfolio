@@ -11,7 +11,8 @@ const requiredEnvVars = [
   'EMAIL_SERVICE',
   'JWT_SECRET',
   'ADMIN_USERNAME',
-  'ADMIN_PASSWORD'
+  'ADMIN_PASSWORD',
+  'SESSION_SECRET'
 ];
 
 function validateEnv() {

@@ -32,7 +32,7 @@ app.use(helmet({
       scriptSrc: ["'self'", "'unsafe-inline'"],
       imgSrc: ["'self'", "data:", "https:"],
       connectSrc: ["'self'", process.env.FRONTEND_URL],
-      frameSrc: "none"
+      frameSrc: ["'none'"] 
     }
   },
   crossOriginEmbedderPolicy: process.env.NODE_ENV === 'production',
@@ -56,12 +56,14 @@ app.use(compression({
 
 // Add cookie security
 app.use(session({
-  secret: process.env.SESSION_SECRET,
-  cookie: {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict'
-  }
+    secret: process.env.SESSION_SECRET,  
+    resave: false,       
+    saveUninitialized: false,      
+    cookie: {
+        secure: process.env.NODE_ENV === 'production',
+        httpOnly: true,                      
+        maxAge: 24 * 60 * 60 * 1000               
+    }
 }));
 
 // CORS configuration
