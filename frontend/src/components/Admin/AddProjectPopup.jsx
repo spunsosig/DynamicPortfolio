@@ -4,7 +4,7 @@ import { MdCloudUpload } from "react-icons/md";
 const AddProjectPopup = ({ onClose }) => {
     
     const [selectedFile, setSelectedFile] = useState(null);
-
+    
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -17,7 +17,7 @@ const AddProjectPopup = ({ onClose }) => {
   
     const buttonStyle = `w-full bg-purple-600 hover:bg-purple-700 transition rounded-xl font-semibold py-3 text-white`;
 
-    const fileInputStyle = `w-full p-6 mb-6 rounded-xl !bg-green-700 !hover:bg-green-600 
+    const fileInputStyle = `w-full p-6 mb-6 rounded-xl !bg-green-700 !hover:bg-green-600
         !transition-colors !border-2 !border-dashed !border-green-500
         !flex !flex-col !items-center !justify-center !gap-2
         !outline-none !text-white !cursor-pointer`;
