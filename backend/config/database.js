@@ -13,11 +13,6 @@ const pool = mysql.createPool({
     typeCast: function (field, next) {
         if (field.type === 'JSON') {
             const value = field.string();
-            console.log('TypeCast JSON field:', {
-                name: field.name,
-                value: value,
-                type: typeof value
-            });
             try {
                 return JSON.parse(value);
             } catch (err) {

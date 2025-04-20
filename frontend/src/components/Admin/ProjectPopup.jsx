@@ -9,7 +9,8 @@ const ProjectPopup = ({ project, onClose, onSuccess }) => {
         description: project?.description || '',
         techStack: project?.tech_stack || '',
         blogContent: project?.blog_content || '',
-        imageFiles: []
+        imageFiles: [],
+        keepExistingImages: true
     });
     const [isLoading, setIsLoading] = useState(false);
 
@@ -23,7 +24,7 @@ const ProjectPopup = ({ project, onClose, onSuccess }) => {
             formDataObj.append('description', formData.description);
             formDataObj.append('techStack', formData.techStack);
             formDataObj.append('blogContent', formData.blogContent || '');
-            formDataObj.append('keepExistingImages', true);
+            formDataObj.append('keepExistingImages', formData.keepExistingImages);
 
             formData.imageFiles.forEach(file => {
                 formDataObj.append('images', file);
@@ -139,14 +140,32 @@ const ProjectPopup = ({ project, onClose, onSuccess }) => {
                         />
                     </div>
 
+                    {/* Keep Existing Images Checkbox */}
+                    {project && (
+                        <div className="mb-4">
+                            <label className="flex items-center space-x-3 text-white cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    checked={formData.keepExistingImages}
+                                    onChange={(e) => setFormData(prev => ({
+                                        ...prev,
+                                        keepExistingImages: e.target.checked
+                                    }))}
+                                    className="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
+                                />
+                                <span>Keep existing images</span>
+                            </label>
+                        </div>
+                    )}
+
                     {/* Image Upload */}
                     <div>
                         <label className={fileInputStyle}>
                             <MdCloudUpload className="w-8 h-8" />
                             <span className="max-w-full truncate">
                                 {formData.imageFiles.length > 0 
-                                    ? formData.imageFiles.map(file => file.name).join(', ') 
-                                    : 'Click to upload images (max 5)'}
+                                    ? `Selected: ${formData.imageFiles.map(file => file.name).join(', ')}` 
+                                    : `Click to ${project ? 'add or replace' : 'upload'} images (max 5)`}
                             </span>
                             {formData.imageFiles.length > 0 && (
                                 <span className="text-sm text-gray-300">

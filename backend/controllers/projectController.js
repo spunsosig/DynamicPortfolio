@@ -137,7 +137,7 @@ exports.deleteProject = async (req, res) => {
             // Delete each image file
             for (const imageUrl of imageUrls) {
                 try {
-                    const imagePath = path.join(__dirname, '../../public/assets', imageUrl);
+                    const imagePath = path.join(__dirname, '../public/assets', imageUrl);
                     await fs.unlink(imagePath);
                     logger.info(`Deleted image: ${imageUrl}`);
                 } catch (err) {
