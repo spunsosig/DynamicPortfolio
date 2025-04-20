@@ -3,9 +3,10 @@ const bcrypt = require('bcrypt');
 
 exports.login = async (req, res) => {
     const { username, password } = req.body;
-
+    const hashedPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD, 10);
+    
     if (username !== process.env.ADMIN_USERNAME || 
-        password !== process.env.ADMIN_PASSWORD) {
+        !await bcrypt.compare(password, hashedPassword)) {
         return res.status(401).json({ error: 'Invalid credentials' });
     }
 

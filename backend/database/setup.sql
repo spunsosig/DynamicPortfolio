@@ -28,12 +28,12 @@ CREATE TABLE admins (
 );
 
 CREATE TABLE projects (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(255) NOT NULL,
-    description TEXT NOT NULL,
-    main_image VARCHAR(255) NOT NULL,
-    blog_content TEXT,
-    additional_images JSON,
+    description VARCHAR(255) NOT NULL,    -- Short description for cards
+    blog_content TEXT,                    -- Detailed for project page
+    tech_stack VARCHAR(255) NOT NULL,
+    image_urls JSON NULL,
     is_archived BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP

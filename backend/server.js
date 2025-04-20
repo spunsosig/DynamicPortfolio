@@ -11,6 +11,7 @@ const rateLimit = require('express-rate-limit');
 const compression = require('compression');
 const session = require('express-session');
 const { csrfProtection, preventParamPollution, sanitizeData } = require('./utils/security');
+const pool = require('./config/database');
 
 // Import routes
 const contactRoutes = require('./routes/contact');
@@ -56,13 +57,14 @@ app.use(compression({
 
 // Add cookie security
 app.use(session({
-    secret: process.env.SESSION_SECRET,  
-    resave: false,       
-    saveUninitialized: false,      
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
     cookie: {
         secure: process.env.NODE_ENV === 'production',
-        httpOnly: true,                      
-        maxAge: 24 * 60 * 60 * 1000               
+        httpOnly: true,
+        sameSite: 'strict',
+        maxAge: 24 * 60 * 60 * 1000
     }
 }));
 
@@ -96,6 +98,19 @@ app.use('/api/', limiter);
 app.use('/api/contact', contactRoutes);
 app.use('/api/schedule', scheduleRoutes);
 app.use('/api/admin', adminRoutes);
+
+// Public routes
+app.get('/api/projects', async (req, res) => {
+  try {
+    const [projects] = await pool.execute(
+      'SELECT * FROM projects WHERE is_archived = false ORDER BY created_at DESC'
+    );
+    res.json(projects);
+  } catch (error) {
+    console.error('Error fetching projects:', error);
+    res.status(500).json({ error: 'Failed to fetch projects' });
+  }
+});
 
 // Serve static files
 app.use(express.static(path.join(__dirname, '../frontend/dist')));
