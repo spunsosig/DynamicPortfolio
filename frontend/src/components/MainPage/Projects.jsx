@@ -1,14 +1,19 @@
 import React, { useRef, useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import api from "../../utils/api";
 import { toast } from "react-hot-toast";
 
 const Projects = () => {
   const navigate = useNavigate();
-  const [projects, setProjects] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const carouselRef = useRef(null);
   const sectionRef = useRef(null);
   const headingRef = useRef(null);
+  const [projects, setProjects] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const navigateToProjects = (projectId) => {
+    navigate(`/projects?id=${projectId}`);
+  };
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -115,10 +120,11 @@ const Projects = () => {
           scrollbarWidth: "none",
         }}
       >
-        {projects.map((project) => (
+        {projects.map((project, index) => (
           <div
             key={project.id}
-            className="shrink-0 w-[700px] h-[500px] bg-gray-800 text-white rounded-2xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:z-10"
+            onClick={() => navigateToProjects(project.id)}
+            className="shrink-0 w-[700px] h-[500px] bg-gray-800 text-white rounded-2xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:z-10 cursor-pointer"
           >
             {project.image_urls && (
               <img

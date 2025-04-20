@@ -54,20 +54,23 @@ exports.updateProject = async (req, res) => {
             if (existingProject[0]?.image_urls) {
                 const fs = require('fs').promises;
                 const path = require('path');
-                const oldImages = JSON.parse(existingProject[0].image_urls);
                 
-                // Delete old images if not keeping them
-                if (!keepExistingImages) {
+                // Handle existing images without parsing
+                const oldImages = existingProject[0].image_urls;
+                
+                if (!keepExistingImages && Array.isArray(oldImages)) {
+                    // Delete old images
                     for (const oldImage of oldImages) {
                         try {
                             await fs.unlink(path.join(__dirname, '../../public/assets', oldImage));
+                            logger.info(`Deleted old image: ${oldImage}`);
                         } catch (err) {
                             logger.error(`Failed to delete old image ${oldImage}:`, err);
                         }
                     }
                 } else {
-                    // Keep existing images and add new ones
-                    imageUrls = [...oldImages];
+                    // Keep existing images
+                    imageUrls = Array.isArray(oldImages) ? oldImages : [];
                 }
             }
             
@@ -76,10 +79,10 @@ exports.updateProject = async (req, res) => {
             imageUrls = [...imageUrls, ...newImageUrls];
         } else if (existingProject[0]?.image_urls) {
             // No new files - keep existing images
-            imageUrls = JSON.parse(existingProject[0].image_urls);
+            imageUrls = existingProject[0].image_urls;
         }
 
-        // Update the project with all data
+        // Update project with stringified array
         await connection.execute(
             'UPDATE projects SET title = ?, description = ?, blog_content = ?, tech_stack = ?, image_urls = ? WHERE id = ?',
             [title, description, blogContent, techStack, JSON.stringify(imageUrls), id]
@@ -106,6 +109,7 @@ exports.updateProject = async (req, res) => {
     }
 };
 
+
 exports.deleteProject = async (req, res) => {
     const connection = await pool.getConnection();
     try {
@@ -121,14 +125,21 @@ exports.deleteProject = async (req, res) => {
             const fs = require('fs').promises;
             const path = require('path');
             
-            // Parse JSON array of image URLs
-            const imageUrls = JSON.parse(results[0].image_urls);
+            // No need to parse - image_urls is already an array due to MySQL JSON type
+            const imageUrls = results[0].image_urls;
+
+            // Log the data to see what we're getting
+            logger.info('Image URLs:', {
+                raw: results[0].image_urls,
+                type: typeof results[0].image_urls
+            });
 
             // Delete each image file
             for (const imageUrl of imageUrls) {
                 try {
                     const imagePath = path.join(__dirname, '../../public/assets', imageUrl);
                     await fs.unlink(imagePath);
+                    logger.info(`Deleted image: ${imageUrl}`);
                 } catch (err) {
                     logger.error(`Failed to delete image ${imageUrl}:`, err);
                 }
