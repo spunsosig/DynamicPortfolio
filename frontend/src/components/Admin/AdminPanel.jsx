@@ -171,3 +171,5 @@ const AdminPanel = () => {
 };
 
 export default AdminPanel;
+
+// main admin page which shows projects

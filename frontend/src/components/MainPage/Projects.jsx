@@ -3,6 +3,7 @@ import api from "../../utils/api";
 import { toast } from "react-hot-toast";
 
 const Projects = () => {
+  const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const carouselRef = useRef(null);

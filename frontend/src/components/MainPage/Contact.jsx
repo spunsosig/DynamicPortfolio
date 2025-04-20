@@ -254,7 +254,7 @@ const ContactPage = () => {
            onSubmit={handleContactSubmit}
            className="contact-form"
         >
-          <h2 className="text-3xl font-bold mb-6">Send a Message</h2>
+          <h2 className="text-3xl text-white font-bold mb-6">Send a Message</h2>
           {message.text && (
             <div
               className={`mb-4 p-3 rounded ${
