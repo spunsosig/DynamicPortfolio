@@ -9,6 +9,9 @@ const pool = mysql.createPool({
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,
+    connectTimeout: 10000,
+    multipleStatements: false, // Prevent multiple SQL statements
+
     // Updated JSON handling with UTF-8 encoding
     typeCast: function (field, next) {
         if (field.type === 'JSON') {

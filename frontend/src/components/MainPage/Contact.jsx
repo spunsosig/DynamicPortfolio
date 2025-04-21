@@ -298,7 +298,7 @@ const ContactPage = () => {
           />
           <button
             type="submit"
-            className={buttonStyle}
+            className={buttonStyle + " text-white"}
             disabled={isSubmitting}
           >
             {isSubmitting ? (
