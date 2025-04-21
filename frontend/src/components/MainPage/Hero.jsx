@@ -1,9 +1,30 @@
 const Hero = () => {
+    const handleVideoError = (e) => {
+        console.error('Video loading error:', e);
+    };
+
     return (
         <section id="home" className="page-section title-section relative min-h-screen flex items-center justify-center">
-            <video autoPlay muted loop className="background-video">
-                <source src="assets/background.mp4" type="video/mp4" />
+            <video 
+                autoPlay 
+                muted 
+                loop 
+                playsInline 
+                preload="auto"
+                className="background-video"
+                onError={handleVideoError}
+            >
+                <source 
+                    src="/assets/background_new.mp4" 
+                    type="video/mp4"
+                />
+                <source 
+                    src="/assets/background.webm" 
+                    type="video/webm"
+                />
+                Your browser does not support HTML5 video.
             </video>
+            
             <p className="main-subtitle">Software Engineer, Full stack developer</p>
             <div className="hero-bottom-gradient" />
         </section>
