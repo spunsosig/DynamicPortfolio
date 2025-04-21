@@ -134,11 +134,32 @@ const Projects = () => {
               />
             )}
             <div className="p-6">
-              <h3 className="text-2xl font-bold mb-2">{project.title}</h3>
-              <p>{project.description}</p>
-              <div className="mt-2 text-sm text-gray-400">
-                Tech Stack: {project.tech_stack}
+              <h3 className="text-2xl font-bold mb-4">{project.title}</h3>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {project?.tech_stack && (
+                  project.tech_stack.includes(',')
+                    ? project.tech_stack
+                        .split(',')
+                        .map(tech => tech.trim())
+                        .filter(tech => tech.length > 0)
+                        .map((tech, index) => (
+                          <span 
+                            key={index}
+                            className="px-3 py-1 bg-purple-600 hover:bg-purple-700 
+                                     rounded-full text-xs font-medium tracking-wider
+                                     transition-colors duration-200"
+                          >
+                            {tech}
+                          </span>
+                        ))
+                    : <span className="px-3 py-1 bg-purple-600 hover:bg-purple-700 
+                                     rounded-full text-xs font-medium tracking-wider
+                                     transition-colors duration-200">
+                        {project.tech_stack.trim()}
+                      </span>
+                )}
               </div>
+              <p className="text-gray-300 line-clamp-3">{project.description}</p>
             </div>
           </div>
         ))}

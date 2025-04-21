@@ -50,50 +50,93 @@ const ProjectBlog = () => {
         return `${import.meta.env.VITE_API_URL}/assets/${imageUrl}`;
     };
 
-    return(
-        <div className="min-h-screen bg-[#0b263a] text-white p-8">
-            <h1 className="text-4xl font-bold mb-8">{project.title}</h1>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                {project.image_urls && project.image_urls.map((imageUrl, index) => (
-                    <img 
-                        key={index}
-                        src={getImageUrl(imageUrl)} 
-                        alt={`${project.title} - View ${index + 1}`}
-                        className="w-full rounded-3xl shadow-lg object-cover h-[500px] border border-white border-2"
-                    />
-                ))}
+    return (
+        <div className="min-h-screen bg-gradient-to-b from-[#0b263a] to-black">
+            <div className="fixed top-4 left-4 z-10">
+                <button 
+                    onClick={() => window.history.back()}
+                    className="px-4 py-2 bg-purple-600 hover:bg-purple-700 
+                             rounded-full transition-all duration-300 transform 
+                             hover:scale-105 flex items-center gap-2 text-white"
+                >
+                    ← Back
+                </button>
             </div>
-            <div>
-                <h2 className="text-2xl font-bold mb-4 px-2">Technologies Used</h2>
-                <div className="flex flex-wrap gap-3 px-2 pb-4">
-                    {project?.tech_stack && (
-                        project.tech_stack.includes(',')
-                            ? project.tech_stack
-                                .split(',')
-                                .map(tech => tech.trim())
-                                .filter(tech => tech.length > 0)
-                                .map((tech, index) => (
-                                    <span 
-                                        key={index}
-                                        className="px-4 py-2 bg-purple-600 rounded-full text-sm"
-                                    >
-                                        {tech}
-                                    </span>
-                                ))
-                            : // Single technology case
-                            <span className="px-4 py-2 bg-purple-600 rounded-full text-sm">
-                                {project.tech_stack.trim()}
-                            </span>
-                    )}
+
+            <div className="container mx-auto px-4 py-8">
+                {/* Header Section */}
+                <div className="text-center mb-6">
+                    <h1 className="text-4xl font-bold text-white mb-4">{project.title}</h1>
+                    <div className="flex flex-wrap justify-center gap-2">
+                        {project?.tech_stack && (
+                            project.tech_stack.includes(',')
+                                ? project.tech_stack
+                                    .split(',')
+                                    .map(tech => tech.trim())
+                                    .filter(tech => tech.length > 0)
+                                    .map((tech, index) => (
+                                        <span 
+                                            key={index}
+                                            className="px-3 py-1 bg-purple-600 hover:bg-purple-700 
+                                                     rounded-full text-xs font-medium tracking-wider
+                                                     transition-colors duration-200 text-white"
+                                        >
+                                            {tech}
+                                        </span>
+                                    ))
+                                : <span className="px-3 py-1 bg-purple-600 hover:bg-purple-700 
+                                                 rounded-full text-xs font-medium tracking-wider
+                                                 transition-colors duration-200 text-white">
+                                    {project.tech_stack.trim()}
+                                  </span>
+                        )}
+                    </div>
                 </div>
-                    {project.blog_content && (
-                        <div className="mt-8 px-4 pb-4">
-                            <h2 className="text-2xl font-bold mb-4">Project Details</h2>
-                            <p className="text-lg">{project.blog_content}</p>
+
+                {/* Image Gallery */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    {project.image_urls && project.image_urls.map((imageUrl, index) => (
+                        <div key={index} 
+                             className="relative overflow-hidden rounded-lg shadow-lg group">
+                            <img 
+                                src={getImageUrl(imageUrl)} 
+                                alt={`${project.title} - View ${index + 1}`}
+                                className="w-full h-[300px] object-cover transform 
+                                         transition-all duration-300 group-hover:scale-105"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/50 
+                                          to-transparent opacity-0 group-hover:opacity-100 
+                                          transition-opacity duration-300" />
                         </div>
-                    )}
+                    ))}
+                </div>
+
+                {/* Content Section */}
+                <div className="bg-[#0f1824] rounded-lg shadow-xl p-6 text-white">
+                    <div className="prose prose-invert max-w-none">
+                        <div className="mb-6">
+                            <h2 className="text-2xl font-bold mb-3 text-purple-400">
+                                Project Overview
+                            </h2>
+                            <p className="text-gray-300">
+                                {project.description}
+                            </p>
+                        </div>
+
+                        {project.blog_content && (
+                            <div>
+                                <h2 className="text-2xl font-bold mb-3 text-purple-400">
+                                    Technical Details
+                                </h2>
+                                <p className="text-gray-300 whitespace-pre-line">
+                                    {project.blog_content}
+                                </p>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
+        </div>
     );
 };
 

@@ -15,7 +15,7 @@ const pool = mysql.createPool({
     // Updated JSON handling with UTF-8 encoding
     typeCast: function (field, next) {
         if (field.type === 'JSON') {
-            const value = field.string();
+            const value = field.string("utf8")
             try {
                 return JSON.parse(value);
             } catch (err) {
