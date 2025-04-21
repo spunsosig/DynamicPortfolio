@@ -139,7 +139,7 @@ const ContactPage = () => {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center px-4 py-12">
+    <section id="contact" className="min-h-screen flex items-center justify-center px-4 py-12">
       <div className="grid md:grid-cols-2 gap-10 w-full max-w-6xl">
         {/* Left Panel */}
         <div className="text-white flex flex-col justify-center">
